@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		57622A2E1CAD214E000CEE92 /* PackingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57622A2D1CAD214E000CEE92 /* PackingListViewController.swift */; };
 		9C485DA41A1CCBE1004A6132 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C485DA31A1CCBE1004A6132 /* AppDelegate.swift */; };
 		9C485DA61A1CCBE1004A6132 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C485DA51A1CCBE1004A6132 /* ViewController.swift */; };
 		9C485DA91A1CCBE1004A6132 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C485DA71A1CCBE1004A6132 /* Main.storyboard */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		57622A2D1CAD214E000CEE92 /* PackingListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PackingListViewController.swift; sourceTree = "<group>"; };
 		9C485D9E1A1CCBE1004A6132 /* Flight Info.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Flight Info.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C485DA21A1CCBE1004A6132 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9C485DA31A1CCBE1004A6132 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -61,6 +63,7 @@
 				9C485DC71A1CCCF0004A6132 /* Classes */,
 				9C485DA31A1CCBE1004A6132 /* AppDelegate.swift */,
 				9C485DA51A1CCBE1004A6132 /* ViewController.swift */,
+				57622A2D1CAD214E000CEE92 /* PackingListViewController.swift */,
 				9C485DA71A1CCBE1004A6132 /* Main.storyboard */,
 				9C485DAA1A1CCBE1004A6132 /* Images.xcassets */,
 				9C485DAC1A1CCBE1004A6132 /* LaunchScreen.xib */,
@@ -158,6 +161,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57622A2E1CAD214E000CEE92 /* PackingListViewController.swift in Sources */,
 				9C485DA61A1CCBE1004A6132 /* ViewController.swift in Sources */,
 				9C485DA41A1CCBE1004A6132 /* AppDelegate.swift in Sources */,
 				9C485DC51A1CCBFB004A6132 /* SnowView.swift in Sources */,

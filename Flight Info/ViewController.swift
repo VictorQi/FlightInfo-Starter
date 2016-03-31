@@ -81,13 +81,13 @@ class ViewController: UIViewController {
     
     func changeFlightDataTo(data: FlightData, animated: Bool = false) {
         
-        // populate the UI with the next flight's data
-        summary.text = data.summary
-        flightNr.text = data.flightNr
-        gateNr.text = data.gateNr
-        departingFrom.text = data.departingFrom
-        arrivingTo.text = data.arrivingTo
-        flightStatus.text = data.flightStatus
+//        // populate the UI with the next flight's data
+//        summary.text = data.summary
+//        flightNr.text = data.flightNr
+//        gateNr.text = data.gateNr
+//        departingFrom.text = data.departingFrom
+//        arrivingTo.text = data.arrivingTo
+//        flightStatus.text = data.flightStatus
         
         
         if animated {
@@ -96,6 +96,17 @@ class ViewController: UIViewController {
             cubeTransition(label: flightNr, text: data.flightNr, direction: direction)
             cubeTransition(label: gateNr, text: data.gateNr, direction: direction)
             
+            let offsetDeparting = CGPoint(x: CGFloat(direction.rawValue * 80), y: 0.0)
+            moveLabel(departingFrom, text: data.departingFrom, offset: offsetDeparting)
+            
+            let offsetArriving = CGPoint(x: 0.0, y: CGFloat(direction.rawValue * 50))
+            moveLabel(arrivingTo, text: data.arrivingTo, offset: offsetArriving)
+            
+            cubeTransition(label: flightStatus, text: data.flightStatus, direction: direction)
+            
+            planeDepart()
+            
+            summarySwitchTo(data.summary)
         }else{
             bgImageView.image = UIImage(named: data.weatherImageName)
             snowView.hidden = !data.showWeatherEffects
@@ -107,6 +118,7 @@ class ViewController: UIViewController {
             arrivingTo.text = data.arrivingTo
             
             flightStatus.text = data.flightStatus
+            summary.text = data.summary
         }
         
         // schedule next flight
@@ -124,9 +136,9 @@ class ViewController: UIViewController {
             }, completion: nil)
     }
     
-    func cubeTransition(label label: UILabel, text: NSString, direction: AnimationDirection) {
+    func cubeTransition(label label: UILabel, text: String, direction: AnimationDirection) {
         let auxLabel = UILabel(frame: label.frame)
-        auxLabel.text = label.text
+        auxLabel.text = text
         auxLabel.font = label.font
         auxLabel.textAlignment = label.textAlignment
         auxLabel.textColor = label.textColor
@@ -142,15 +154,15 @@ class ViewController: UIViewController {
             auxLabel.transform = CGAffineTransformIdentity
             label.transform = CGAffineTransformConcat(CGAffineTransformMakeScale(1.0, 0.1), CGAffineTransformMakeTranslation(0.0, -auxLabelOffset))
             }) { _ in
-                label.text = auxLabel.text
+                label.text = text
                 label.transform = CGAffineTransformIdentity
                 auxLabel.removeFromSuperview()
         }
     }
     
-    func moveLabel(label: UILabel, text: NSString, offset: CGPoint) {
+    func moveLabel(label: UILabel, text: String, offset: CGPoint) {
         let auxLabel = UILabel(frame: label.frame)
-        auxLabel.text = label.text
+        auxLabel.text = text
         auxLabel.font = label.font
         auxLabel.textAlignment = label.textAlignment
         auxLabel.textColor = label.textColor
@@ -160,5 +172,77 @@ class ViewController: UIViewController {
         auxLabel.alpha = 0.0
         self.view.addSubview(auxLabel)
         
+        UIView.animateWithDuration(0.5, delay: 0.0, options: [.CurveEaseIn], animations: {
+            label.transform = CGAffineTransformMakeTranslation(offset.x, offset.y)
+            label.alpha = 0.0
+            },completion:nil)
+        
+        UIView.animateWithDuration(0.25, delay: 0.1, options: [.CurveEaseIn], animations: {
+            auxLabel.transform = CGAffineTransformIdentity
+            auxLabel.alpha = 1.0
+        }) { _ in
+            // clean up
+            
+            auxLabel.removeFromSuperview()
+            
+            label.text = text
+            label.alpha = 1.0
+            label.transform = CGAffineTransformIdentity
+        }
+    }
+    
+    func planeDepart() {
+        let originCenter = planeImage.center
+        
+        UIView.animateKeyframesWithDuration(1.5, delay: 0.0, options: [], animations: {
+            
+            UIView.addKeyframeWithRelativeStartTime(0.0, relativeDuration: 0.25, animations: {
+                self.planeImage.center.x += 80
+                self.planeImage.center.y -= 10
+            })
+            
+            UIView.addKeyframeWithRelativeStartTime(0.1, relativeDuration: 0.4, animations: {
+                self.planeImage.transform = CGAffineTransformMakeRotation(CGFloat(-M_PI_4 / 2))
+            })
+            
+            UIView.addKeyframeWithRelativeStartTime(0.25, relativeDuration: 0.25, animations: {
+                self.planeImage.center.x += 100
+                self.planeImage.center.y -= 50
+                self.planeImage.alpha = 0.0
+            })
+            
+            UIView.addKeyframeWithRelativeStartTime(0.51, relativeDuration: 0.01, animations: {
+                self.planeImage.center.x = 0.0
+                self.planeImage.center.y = originCenter.y
+                self.planeImage.transform = CGAffineTransformIdentity
+            })
+            
+            UIView.addKeyframeWithRelativeStartTime(0.55, relativeDuration: 0.45, animations: {
+                self.planeImage.center.x = originCenter.x
+                self.planeImage.alpha = 1.0
+            })
+            }, completion: nil)
+        
+    }
+    
+    func summarySwitchTo(summaryText: String) {
+        
+        UIView.animateKeyframesWithDuration(1.0, delay: 0.0, options: [], animations: {
+            UIView.addKeyframeWithRelativeStartTime(0.0, relativeDuration: 0.45, animations: {
+                self.summary.center.y -= 30
+                self.summary.alpha = 0.0
+            })
+            UIView.addKeyframeWithRelativeStartTime(0.46, relativeDuration: 0.01, animations: {
+                self.summary.text = summaryText
+            })
+            UIView.addKeyframeWithRelativeStartTime(0.55, relativeDuration: 0.45, animations: {
+                self.summary.center.y += 30
+                self.summary.alpha = 1.0
+            })
+            }, completion: nil)
+        
+//        delay(seconds: 0.5, completion: {
+//            
+//        })
     }
 }
